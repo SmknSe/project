@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.leaflet-container {
+    background: transparent;
+}
+
+.pswp {
+    --pswp-bg: rgba(0, 0, 0, 0.9);
+}
