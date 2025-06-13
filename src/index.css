@@ -9,3 +9,8 @@
 .pswp {
     --pswp-bg: rgba(0, 0, 0, 0.9);
 }
+
+.leaflet-marker-icon.filtered {
+  filter: grayscale(100%) brightness(100%);
+  display: none;
+}

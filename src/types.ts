@@ -5,6 +5,8 @@ export interface MarkerData {
   position: [number, number];
   type: 'photo' | 'video' | '3d';
   content: ContentData;
+  icon: string,
+  iconSize: [number, number]
   requiredVisits: string[]; // IDs of markers that must be visited first
 }
 

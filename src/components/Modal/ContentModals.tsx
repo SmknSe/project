@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { MarkerData, ContentData } from '../../types';
+import { useState } from 'react';
 
 interface ContentModalProps {
   marker: MarkerData;
@@ -19,17 +19,17 @@ const PhotoGalleryModal = ({ marker, isVisible, onClose, clickPosition }: Conten
 
   return (
     <div 
-      className={`fixed inset-0 flex items-center justify-center
+      className={`fixed inset-0 flex items-center justify-center p-4
         transition-all duration-700 ease-in-out bg-black
         ${isVisible ? 'bg-opacity-90' : 'bg-opacity-0 pointer-events-none'}`}
       style={{ zIndex: 9999 }}
     >
       <div 
         style={modalStyle}
-        className={`w-full max-w-6xl p-4 transition-all duration-700 ease-in-out transform
+        className={`w-full h-full max-w-6xl max-h-full flex flex-col transition-all duration-700 ease-in-out transform
           ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
       >
-        <div className="relative bg-white rounded-lg overflow-hidden">
+        <div className="relative bg-white rounded-lg overflow-hidden flex flex-col h-full">
           <button 
             onClick={onClose}
             className="absolute top-4 right-4 z-10 text-white bg-black bg-opacity-50 rounded-full p-1
@@ -38,7 +38,7 @@ const PhotoGalleryModal = ({ marker, isVisible, onClose, clickPosition }: Conten
             <X size={24} />
           </button>
 
-          <div className="relative aspect-video">
+          <div className="relative flex-1 min-h-0">
             <img
               src={content.images[currentImageIndex].src}
               alt={content.images[currentImageIndex].alt}
@@ -65,7 +65,7 @@ const PhotoGalleryModal = ({ marker, isVisible, onClose, clickPosition }: Conten
             )}
           </div>
 
-          <div className="p-6">
+          <div className="p-6 bg-white" style={{ fontFamily: 'Festive, cursive' }}>
             <h2 className="text-2xl font-bold mb-2">{marker.title}</h2>
             <p className="text-gray-600 mb-4">{marker.description}</p>
             <p className="text-sm text-gray-500">{content.images[currentImageIndex].alt}</p>
@@ -85,17 +85,17 @@ const VideoModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
 
   return (
     <div 
-      className={`fixed inset-0 flex items-center justify-center
+      className={`fixed inset-0 flex items-center justify-center p-4
         transition-all duration-700 ease-in-out bg-black
         ${isVisible ? 'bg-opacity-90' : 'bg-opacity-0 pointer-events-none'}`}
       style={{ zIndex: 9999 }}
     >
       <div 
         style={modalStyle}
-        className={`w-full max-w-6xl p-4 transition-all duration-700 ease-in-out transform
+        className={`w-full h-full max-w-6xl max-h-full flex flex-col transition-all duration-700 ease-in-out transform
           ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
       >
-        <div className="relative bg-white rounded-lg overflow-hidden">
+        <div className="relative bg-white rounded-lg overflow-hidden flex flex-col h-full">
           <button 
             onClick={onClose}
             className="absolute top-4 right-4 z-10 text-white bg-black bg-opacity-50 rounded-full p-1
@@ -104,7 +104,7 @@ const VideoModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
             <X size={24} />
           </button>
 
-          <div className="aspect-video">
+          <div className="flex-1 min-h-0">
             <video
               controls
               poster={content.thumbnail}
@@ -115,7 +115,7 @@ const VideoModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
             </video>
           </div>
 
-          <div className="p-6">
+          <div className="p-6 bg-white" style={{ fontFamily: 'Festive, cursive' }}>
             <h2 className="text-2xl font-bold mb-2">{marker.title}</h2>
             <p className="text-gray-600">{marker.description}</p>
           </div>
@@ -134,17 +134,17 @@ const ThreeDModal = ({ marker, isVisible, onClose, clickPosition }: ContentModal
 
   return (
     <div 
-      className={`fixed inset-0 flex items-center justify-center
+      className={`fixed inset-0 flex items-center justify-center p-4
         transition-all duration-700 ease-in-out bg-black
         ${isVisible ? 'bg-opacity-90' : 'bg-opacity-0 pointer-events-none'}`}
       style={{ zIndex: 9999 }}
     >
       <div 
         style={modalStyle}
-        className={`w-full max-w-6xl p-4 transition-all duration-700 ease-in-out transform
+        className={`w-full h-full max-w-6xl max-h-full flex flex-col transition-all duration-700 ease-in-out transform
           ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
       >
-        <div className="relative bg-white rounded-lg overflow-hidden">
+        <div className="relative bg-white rounded-lg overflow-hidden flex flex-col h-full">
           <button 
             onClick={onClose}
             className="absolute top-4 right-4 z-10 text-white bg-black bg-opacity-50 rounded-full p-1
@@ -153,7 +153,7 @@ const ThreeDModal = ({ marker, isVisible, onClose, clickPosition }: ContentModal
             <X size={24} />
           </button>
 
-          <div className="aspect-square">
+          <div className="flex-1 min-h-0">
             <model-viewer
               src={content.modelUrl}
               poster={content.previewImage}
@@ -164,7 +164,7 @@ const ThreeDModal = ({ marker, isVisible, onClose, clickPosition }: ContentModal
             ></model-viewer>
           </div>
 
-          <div className="p-6">
+          <div className="p-6 bg-white" style={{ fontFamily: 'Festive, cursive' }}>
             <h2 className="text-2xl font-bold mb-2">{marker.title}</h2>
             <p className="text-gray-600">{marker.description}</p>
           </div>

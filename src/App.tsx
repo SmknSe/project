@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { MapContainer, ImageOverlay, Marker, useMap } from 'react-leaflet';
-import { Icon, LatLngBounds } from 'leaflet';
+import { LatLngBounds } from 'leaflet';
 import { markers } from './data';
 import { MarkerData } from './types';
 import { ContentModal } from './components/Modal/ContentModals';
+import { WelcomeModal } from './components/Modal/WelcomeModal';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { visitMarker, setWelcomeSeen } from './store/gameSlice';
 import 'leaflet/dist/leaflet.css';
 import back from './assets/back.svg';
 import map from './assets/map.svg';
-import khorn1 from './assets/khorn1.png';
 
 // Custom map image dimensions
 const MAP_WIDTH = 800;
@@ -15,35 +17,23 @@ const MAP_HEIGHT = 450;
 
 const bounds: LatLngBounds = new LatLngBounds([0, 0], [MAP_HEIGHT, MAP_WIDTH]);
 
-// Create an SVG string for the map pin icon
-const mapPinSvg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-    <circle cx="12" cy="10" r="3"/>
-  </svg>
-`;
+export function getMarkerIcon(marker: MarkerData, isEnabled: boolean): L.Icon {
+  return new L.Icon({
+    iconUrl: marker.icon,
+    iconSize: marker.iconSize,
+    iconAnchor: [90, 85],
+    popupAnchor: [0, -85],
+    className: isEnabled ? '' : 'filtered',
+  });
+}
 
-const customIcon = new Icon({
-  iconUrl: khorn1,
-  iconSize: [180, 95],
-  iconAnchor: [12, 41],
-  popupAnchor: [0, -41],
-});
-
-const disabledIcon = new Icon({
-  iconUrl: 'data:image/svg+xml;base64,' + btoa(mapPinSvg.replace('currentColor', '#9CA3AF')),
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [0, -41],
-});
-
-function MarkerWithZoom({ 
-  position, 
+export function MarkerWithZoom({
+  position,
   marker,
   onMarkerClick,
   isEnabled,
   mapRef
-}: { 
+}: {
   position: [number, number];
   marker: MarkerData;
   onMarkerClick: (marker: MarkerData, clickPos: { x: number; y: number }) => void;
@@ -52,13 +42,13 @@ function MarkerWithZoom({
 }) {
   const handleMarkerClick = (e: L.LeafletMouseEvent) => {
     if (!isEnabled || !mapRef.current) return;
-    
+
     const clickPoint = mapRef.current.latLngToContainerPoint(e.latlng);
-    
-    mapRef.current.flyTo(position, 4, {
-      duration: 1.5
+
+    mapRef.current.flyTo(position, 1, {
+      duration: 1.5,
     });
-    
+
     setTimeout(() => {
       onMarkerClick(marker, { x: clickPoint.x, y: clickPoint.y });
     }, 750);
@@ -67,9 +57,9 @@ function MarkerWithZoom({
   return (
     <Marker
       position={position}
-      icon={isEnabled ? customIcon : disabledIcon}
+      icon={getMarkerIcon(marker, isEnabled)}
       eventHandlers={{
-        click: handleMarkerClick
+        click: handleMarkerClick,
       }}
     />
   );
@@ -91,9 +81,11 @@ export default function CustomMap() {
   const [isClient, setIsClient] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState<MarkerData | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [visitedMarkers, setVisitedMarkers] = useState<Set<string>>(new Set(['island1']));
   const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null);
   const mapRef = React.useRef<L.Map | null>(null);
+
+  const dispatch = useAppDispatch();
+  const { visitedMarkers, hasSeenWelcome } = useAppSelector((state) => state.game);
 
   useEffect(() => {
     setIsClient(true);
@@ -101,20 +93,20 @@ export default function CustomMap() {
 
   const isMarkerEnabled = useCallback((marker: MarkerData) => {
     if (marker.requiredVisits.length === 0) return true;
-    return marker.requiredVisits.every(id => visitedMarkers.has(id));
+    return marker.requiredVisits.every(id => visitedMarkers.includes(id));
   }, [visitedMarkers]);
 
   const handleMarkerSelect = useCallback((marker: MarkerData, clickPos: { x: number; y: number }) => {
-    setVisitedMarkers(prev => new Set([...prev, marker.id]));
+    dispatch(visitMarker(marker.id));
     setClickPosition(clickPos);
     setSelectedMarker(marker);
     setIsModalVisible(true);
-  }, []);
+  }, [dispatch]);
 
   const handleCloseModal = useCallback(() => {
     setIsModalVisible(false);
     if (mapRef.current) {
-      mapRef.current.flyTo([MAP_HEIGHT/2, MAP_WIDTH/2], 2, {
+      mapRef.current.flyTo([MAP_HEIGHT/2, MAP_WIDTH/2], 1, {
         duration: 1.5
       });
     }
@@ -123,6 +115,10 @@ export default function CustomMap() {
       setClickPosition(null);
     }, 700);
   }, []);
+
+  const handleWelcomeClose = useCallback(() => {
+    dispatch(setWelcomeSeen());
+  }, [dispatch]);
 
   if (!isClient) return null;
 
@@ -166,6 +162,10 @@ export default function CustomMap() {
           clickPosition={clickPosition}
         />
       )}
+      <WelcomeModal
+        isVisible={!hasSeenWelcome}
+        onClose={handleWelcomeClose}
+      />
     </div>
   );
 }
