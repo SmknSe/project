@@ -10,6 +10,8 @@ import { visitMarker, setWelcomeSeen } from './store/gameSlice';
 import 'leaflet/dist/leaflet.css';
 import back from './assets/back.svg';
 import map from './assets/map.svg';
+import { GalleryButton } from './UI/GalleryButton';
+import { CreatureGallery } from './components/Gallery/CreatureGallery';
 
 // Custom map image dimensions
 const MAP_WIDTH = 800;
@@ -17,13 +19,13 @@ const MAP_HEIGHT = 450;
 
 const bounds: LatLngBounds = new LatLngBounds([0, 0], [MAP_HEIGHT, MAP_WIDTH]);
 
-export function getMarkerIcon(marker: MarkerData, isEnabled: boolean): L.Icon {
+export function getMarkerIcon(marker: MarkerData, isEnabled: boolean, isNewlyEnabled: boolean): L.Icon {
   return new L.Icon({
     iconUrl: marker.icon,
     iconSize: marker.iconSize,
     iconAnchor: [90, 85],
     popupAnchor: [0, -85],
-    className: isEnabled ? '' : 'filtered',
+    className: `${isEnabled ? '' : 'filtered'} ${isNewlyEnabled ? 'highlighted' : ''}`,
   });
 }
 
@@ -32,32 +34,27 @@ export function MarkerWithZoom({
   marker,
   onMarkerClick,
   isEnabled,
-  mapRef
+  isNewlyEnabled,
+  mapRef,
+  zIndexOffset
 }: {
   position: [number, number];
   marker: MarkerData;
-  onMarkerClick: (marker: MarkerData, clickPos: { x: number; y: number }) => void;
+  onMarkerClick: (marker: MarkerData) => void;
   isEnabled: boolean;
+  isNewlyEnabled: boolean;
   mapRef: React.MutableRefObject<L.Map | null>;
+  zIndexOffset: number;
 }) {
   const handleMarkerClick = (e: L.LeafletMouseEvent) => {
-    if (!isEnabled || !mapRef.current) return;
-
-    const clickPoint = mapRef.current.latLngToContainerPoint(e.latlng);
-
-    mapRef.current.flyTo(position, 1, {
-      duration: 1.5,
-    });
-
-    setTimeout(() => {
-      onMarkerClick(marker, { x: clickPoint.x, y: clickPoint.y });
-    }, 750);
+    onMarkerClick(marker);
   };
 
   return (
     <Marker
       position={position}
-      icon={getMarkerIcon(marker, isEnabled)}
+      icon={getMarkerIcon(marker, isEnabled, isNewlyEnabled)}
+      zIndexOffset={zIndexOffset}
       eventHandlers={{
         click: handleMarkerClick,
       }}
@@ -81,7 +78,7 @@ export default function CustomMap() {
   const [isClient, setIsClient] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState<MarkerData | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null);
+  const [isGalleryVisible, setIsGalleryVisible] = useState(false);
   const mapRef = React.useRef<L.Map | null>(null);
 
   const dispatch = useAppDispatch();
@@ -92,33 +89,51 @@ export default function CustomMap() {
   }, []);
 
   const isMarkerEnabled = useCallback((marker: MarkerData) => {
+  console.log(marker.title, marker.requiredVisits, visitedMarkers);
+
     if (marker.requiredVisits.length === 0) return true;
     return marker.requiredVisits.every(id => visitedMarkers.includes(id));
   }, [visitedMarkers]);
 
-  const handleMarkerSelect = useCallback((marker: MarkerData, clickPos: { x: number; y: number }) => {
+  const isNewlyEnabled = useCallback((marker: MarkerData) => {
+  if (marker.requiredVisits.length === 0) return false;
+
+  const uniqueVisited = Array.from(new Set(visitedMarkers));
+  const uniqueRequired = Array.from(new Set(marker.requiredVisits));
+
+  if (uniqueVisited.length !== uniqueRequired.length) return false;
+
+  return uniqueRequired.every(id => uniqueVisited.includes(id));
+}, [visitedMarkers]);
+
+const isGalleryUnlocked = useCallback(() => {
+    return visitedMarkers.includes('khorn1');
+  }, [visitedMarkers]);
+
+  const handleMarkerSelect = useCallback((marker: MarkerData) => {
     dispatch(visitMarker(marker.id));
-    setClickPosition(clickPos);
     setSelectedMarker(marker);
     setIsModalVisible(true);
   }, [dispatch]);
 
   const handleCloseModal = useCallback(() => {
     setIsModalVisible(false);
-    if (mapRef.current) {
-      mapRef.current.flyTo([MAP_HEIGHT/2, MAP_WIDTH/2], 1, {
-        duration: 1.5
-      });
-    }
     setTimeout(() => {
       setSelectedMarker(null);
-      setClickPosition(null);
     }, 700);
   }, []);
 
   const handleWelcomeClose = useCallback(() => {
     dispatch(setWelcomeSeen());
   }, [dispatch]);
+
+  const handleOpenGallery = useCallback(() => {
+    setIsGalleryVisible(true);
+  }, []);
+
+  const handleCloseGallery = useCallback(() => {
+    setIsGalleryVisible(false);
+  }, []);
 
   if (!isClient) return null;
 
@@ -141,14 +156,16 @@ export default function CustomMap() {
               bounds={bounds}
               url={map}
             />
-            {markers.map((marker) => (
+            {markers.map((marker, index) => (
               <MarkerWithZoom
                 key={marker.id}
                 position={marker.position}
                 marker={marker}
                 onMarkerClick={handleMarkerSelect}
                 isEnabled={isMarkerEnabled(marker)}
+                isNewlyEnabled={isNewlyEnabled(marker)}
                 mapRef={mapRef}
+                zIndexOffset={index * 100}
               />
             ))}
           </MapContainer>
@@ -159,12 +176,19 @@ export default function CustomMap() {
           marker={selectedMarker}
           onClose={handleCloseModal}
           isVisible={isModalVisible}
-          clickPosition={clickPosition}
         />
       )}
       <WelcomeModal
         isVisible={!hasSeenWelcome}
         onClose={handleWelcomeClose}
+      />
+      <GalleryButton 
+        onClick={handleOpenGallery}
+        isVisible={isGalleryUnlocked()}
+      />
+      <CreatureGallery
+        isVisible={isGalleryVisible}
+        onClose={handleCloseGallery}
       />
     </div>
   );

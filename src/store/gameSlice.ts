@@ -6,7 +6,7 @@ interface GameState {
 }
 
 const initialState: GameState = {
-  visitedMarkers: ['island1'], // Start with first island unlocked
+  visitedMarkers: [],
   hasSeenWelcome: false,
 };
 

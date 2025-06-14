@@ -1,7 +1,6 @@
 export interface MarkerData {
   id: string;
   title: string;
-  description: string;
   position: [number, number];
   type: 'photo' | 'video' | '3d';
   content: ContentData;
@@ -11,7 +10,6 @@ export interface MarkerData {
 }
 
 interface BaseContent {
-  description: string;
 }
 
 interface PhotoContent extends BaseContent {
@@ -21,6 +19,7 @@ interface PhotoContent extends BaseContent {
     alt: string;
     width: number;
     height: number;
+  description: string;
   }[];
 }
 
@@ -28,12 +27,16 @@ interface VideoContent extends BaseContent {
   type: 'video';
   videoUrl: string;
   thumbnail: string;
+  description: string;
+
 }
 
 interface ThreeDContent extends BaseContent {
   type: '3d';
   modelUrl: string;
   previewImage: string;
+  description: string;
+
 }
 
 export type ContentData = PhotoContent | VideoContent | ThreeDContent;
