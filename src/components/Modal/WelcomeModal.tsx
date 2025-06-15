@@ -16,7 +16,7 @@ export function WelcomeModal({ isVisible, onClose }: WelcomeModalProps) {
 
       {/* Добавляем overflow-y-auto и relative */}
       <div className="absolute inset-0 overflow-y-auto flex items-center justify-center px-4">
-        <div className="max-w-full p-10 text-center">
+        <div className="max-w-full h-full flex flex-col items-center justify-center py-10 text-center">
           <h1
             className="text-4xl md:text-6xl font-bold text-white mb-6"
             style={{ fontFamily: 'Festive, cursive' }}

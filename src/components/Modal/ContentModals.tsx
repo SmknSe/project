@@ -30,7 +30,7 @@ const PhotoGalleryModal = ({ marker, isVisible, onClose, clickPosition, children
         className={`w-full h-full max-w-6xl max-h-screen flex flex-col transition-all duration-700 ease-in-out transform
     ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}
       >
-        <div className="relative flex flex-col flex-1 min-h-0 overflow-hidden p-4 gap-4">
+        <div className={`relative flex flex-col flex-1 min-h-0 overflow-hidden p-4 gap-4 ${children ? 'mb-20' : ''}`}>
           {/* Шапка */}
           <div className="flex items-center justify-between text-white px-4 py-3">
             <h2 className="text-lg font-bold">{marker.title}</h2>
@@ -85,8 +85,8 @@ const PhotoGalleryModal = ({ marker, isVisible, onClose, clickPosition, children
           >
             <p>{content.images[currentImageIndex].description}</p>
           </div>
-          {children}
         </div>
+        {children}
       </div>
     </div>
   );
@@ -360,7 +360,7 @@ const MixedModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
   const switchTo = (index: number) => setCurrentIndex(index);
 
   const handleClose = () => {
-  setTimeout(() => setCurrentIndex(0), 700);
+    setTimeout(() => setCurrentIndex(0), 700);
     onClose();
   };
 
@@ -374,10 +374,10 @@ const MixedModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
           clickPosition={clickPosition}
         >
           {/* Кнопка прямо внутри модалки */}
-          {content.contents.length > currentIndex+1 && (
+          {content.contents.length > currentIndex + 1 && (
             <button
-              onClick={() => switchTo(currentIndex+1)}
-              className="absolute bottom-4 right-9 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 z-50"
+              onClick={() => switchTo(currentIndex + 1)}
+              className="absolute bottom-5 right-9 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 z-50"
             >
               Продолжить путешествие
             </button>
@@ -393,10 +393,10 @@ const MixedModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
           clickPosition={clickPosition}
         >
           {/* Кнопка прямо внутри модалки */}
-          {content.contents.length > currentIndex+1 && (
+          {content.contents.length > currentIndex + 1 && (
             <button
-              onClick={() => switchTo(currentIndex+1)}
-              className="absolute bottom-4 right-9 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 z-50"
+              onClick={() => switchTo(currentIndex + 1)}
+              className="absolute bottom-5 right-9 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 z-50"
             >
               Продолжить путешествие
             </button>
@@ -412,10 +412,10 @@ const MixedModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
           clickPosition={clickPosition}
         >
           {/* Кнопка прямо внутри модалки */}
-          {content.contents.length > currentIndex+1 && (
+          {content.contents.length > currentIndex + 1 && (
             <button
-              onClick={() => switchTo(currentIndex+1)}
-              className="absolute bottom-4 right-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 z-50"
+              onClick={() => switchTo(currentIndex + 1)}
+              className="absolute bottom-5 right-4 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 z-50"
             >
               Продолжить путешествие
             </button>
