@@ -89,7 +89,6 @@ export default function CustomMap() {
   }, []);
 
   const isMarkerEnabled = useCallback((marker: MarkerData) => {
-  console.log(marker.title, marker.requiredVisits, visitedMarkers);
 
     if (marker.requiredVisits.length === 0) return true;
     return marker.requiredVisits.every(id => visitedMarkers.includes(id));
@@ -107,7 +106,7 @@ export default function CustomMap() {
 }, [visitedMarkers]);
 
 const isGalleryUnlocked = useCallback(() => {
-    return visitedMarkers.includes('khorn1');
+    return visitedMarkers.includes('arcwood');
   }, [visitedMarkers]);
 
   const handleMarkerSelect = useCallback((marker: MarkerData) => {

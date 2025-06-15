@@ -72,23 +72,6 @@ const creatureImages: CreatureImage[] = [
 export function CreatureGallery({ isVisible, onClose }: CreatureGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isGridView, setIsGridView] = useState(true);
-  const [animatedImages, setAnimatedImages] = useState<boolean[]>([]);
-
-  useEffect(() => {
-    if (isVisible && isGridView) {
-      setAnimatedImages(new Array(creatureImages.length).fill(false));
-      
-      creatureImages.forEach((_, index) => {
-        setTimeout(() => {
-          setAnimatedImages(prev => {
-            const newState = [...prev];
-            newState[index] = true;
-            return newState;
-          });
-        }, 200 + index * 100);
-      });
-    }
-  }, [isVisible, isGridView]);
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % creatureImages.length);
@@ -110,7 +93,11 @@ export function CreatureGallery({ isVisible, onClose }: CreatureGalleryProps) {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-lg">
+    <div className="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-lg scrollbar-thumb-white scrollbar-track-black"
+      style={{
+        scrollbarWidth: 'thin',
+        scrollbarColor: 'white black',
+      }}>
       <div className="absolute inset-0 flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 backdrop-blur-sm border-b border-white/10">
@@ -137,21 +124,20 @@ export function CreatureGallery({ isVisible, onClose }: CreatureGalleryProps) {
                 {creatureImages.map((creature, index) => (
                   <div
                     key={index}
-                    className={`group cursor-pointer transition-all duration-500 hover:scale-105 ${
-                      animatedImages[index] ? 'animate-fadeInScale' : 'opacity-0 scale-90'
-                    }`}
+                    className="group cursor-pointer"
+                    style={{ animationDelay: `${index * 100}ms` }}
                     onClick={() => openImageView(index)}
                   >
-                    <div className="relative overflow-hidden rounded-xl shadow-2xl bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10">
+                    <div className="relative overflow-hidden rounded-xl border border-white/10">
                       <div className="aspect-[3/4] overflow-hidden">
                         <img
                           src={creature.src}
                           alt={creature.name}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="absolute inset-0" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white translate-y-full">
                         <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'Festive, cursive' }}>
                           {creature.name}
                         </h3>
@@ -171,7 +157,7 @@ export function CreatureGallery({ isVisible, onClose }: CreatureGalleryProps) {
                 >
                   <ChevronLeft className="w-8 h-8" />
                 </button>
-                
+
                 <div className="max-w-5xl max-h-full mx-8">
                   <img
                     src={creatureImages[currentIndex].src}

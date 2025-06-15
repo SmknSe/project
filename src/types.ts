@@ -2,7 +2,7 @@ export interface MarkerData {
   id: string;
   title: string;
   position: [number, number];
-  type: 'photo' | 'video' | '3d';
+  type: 'photo' | 'video' | 'text' | 'dialog' | 'mixed';
   content: ContentData;
   icon: string,
   iconSize: [number, number]
@@ -10,6 +10,7 @@ export interface MarkerData {
 }
 
 interface BaseContent {
+  type: string
 }
 
 interface PhotoContent extends BaseContent {
@@ -31,12 +32,32 @@ interface VideoContent extends BaseContent {
 
 }
 
-interface ThreeDContent extends BaseContent {
-  type: '3d';
-  modelUrl: string;
-  previewImage: string;
-  description: string;
-
+interface TextContent extends BaseContent {
+  type: 'text';
+  paragraphs: string[];
 }
 
-export type ContentData = PhotoContent | VideoContent | ThreeDContent;
+interface DialogContent extends BaseContent {
+  type: 'dialog';
+  start: string;
+  nodes: DialogNode[];
+}
+
+interface DialogNode {
+  id: string;
+  text: string;
+  options: DialogOption[];
+}
+
+interface DialogOption {
+  text: string;
+  nextId: string | null;
+}
+
+interface MixedContent extends BaseContent {
+  type: 'mixed';
+  types: string[];
+  contents: ContentData[];
+}
+
+export type ContentData = PhotoContent | VideoContent | TextContent | DialogContent | MixedContent;
