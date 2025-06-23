@@ -39,7 +39,18 @@ import waters from './assets/waters.png';
 import mlechny from './assets/mlechny.jpg';
 import plemyWater from './assets/plemyWater.jpg';
 import hoshka from './assets/hoshka.png';
-
+import eye1 from './assets/eye1.jpg';
+import eye2 from './assets/eye2.jpg';
+import eye3 from './assets/eye3.jpg';
+import eye4 from './assets/eye4.jpg';
+import eye5 from './assets/eye5.jpg';
+import eye6 from './assets/eye6.jpg';
+import eye7 from './assets/eye7.jpg';
+import eye8 from './assets/eye8.jpg';
+import eye9 from './assets/eye9.jpg';
+import eye10 from './assets/eye10.jpg';
+import eye11 from './assets/eye11.jpg';
+import eye12 from './assets/eye12.jpg';
 
 export const markers: MarkerData[] = [
   {
@@ -57,6 +68,7 @@ export const markers: MarkerData[] = [
           paragraphs: [
             "Рыбак\nЯ ловлю этих мелких, скользких существ, а потом их жарят наверху. Мне остаётся запах — и соль на пальцах. Иногда я думаю: может, я тоже рыба. Пойманный, разделанный, поданный в нужный час. Но потом вспоминаю: я ещё жив. А я ведь не живу, я просто еще не умер."
           ],
+          pageNumber: 21
         },
         {
           type: 'photo',
@@ -67,6 +79,7 @@ export const markers: MarkerData[] = [
               width: 1200,
               height: 800,
               description: 'Меня всё больше и больше занимали мысли о чём-то другом, отстранённом от всего этого…',
+              pageNumber: 41
             },
             {
               src: Ami2,
@@ -74,6 +87,7 @@ export const markers: MarkerData[] = [
               width: 1200,
               height: 800,
               description: 'Это было последней каплей в чаше моих сомнений.',
+              pageNumber: 58
             },
             {
               src: Ami3,
@@ -81,13 +95,15 @@ export const markers: MarkerData[] = [
               width: 1200,
               height: 800,
               description: '… мне постепенно стало ясно, что я погибла и что корабль, на котором я плыла среди Кхорнской жизни, разлетелся в щепы..',
+              pageNumber: 60
             },
             {
               src: Ami4,
               alt: 'Ami4',
               width: 1200,
               height: 800,
-              description: '… мне постепенно стало ясно, что я погибла и что корабль, на котором я плыла среди Кхорнской жизни, разлетелся в щепы..',
+              description: 'Мне было не больно, я ничего в жизни никогда так не хотела, и было лишь краткое забвенье боли и нелепости всей моей прошлой жизни.',
+              pageNumber: 62
             },
           ]
         }
@@ -106,7 +122,8 @@ export const markers: MarkerData[] = [
       type: 'text',
       paragraphs: [
         "Чиновник\nПорядок — это не зло. Это необходимость. Если мы не будем следить за течением, всё утонет. Да, снизу трудно видеть перспективу. Но мы здесь, наверху, не потому что выше. А потому что несём груз"
-      ]
+      ],
+      pageNumber: 21
     },
     icon: khorn2,
     requiredVisits: []
@@ -121,7 +138,8 @@ export const markers: MarkerData[] = [
       type: 'text',
       paragraphs: [
         "Торговец\nЖить между этажей — значит уметь лавировать. Слушать, кланяться, не думать. На вершине гнилое золото, внизу — гниль без золота. А я между ними, как сандалия в болоте: всё ещё сухая, но уже тонет."
-      ]
+      ],
+      pageNumber: 21
     },
     icon: khorn3,
     requiredVisits: ['khorn2']
@@ -143,7 +161,8 @@ export const markers: MarkerData[] = [
         'Ветер срывает капюшон. Я слышу, как город шепчет за спиной. "Ты вернёшься. Все возвращаются." А я молчу. Потому что не уверена, что не вернусь. Я помню, как в детстве я бросала камни в воду и загадывала желания. И ни одно не сбылось. Но может быть, всё дело в том, что я загадывала — оставаться.',
         'Подходит к концу моста',
         'Хочется развернуться. Но это не голос разума — это голос клеток, приученных к страху. Страх — не враг. Он просто просит остаться живой. Но я хочу начать жить по-другому. Я вижу вершины деревьев. Это не город. Там нет криков, нет лестниц. Только дыхание земли. Не рай. Но и не Кхорн…'
-      ]
+      ],
+      pageNumber: 62
     },
     icon: Bridge,
     requiredVisits: ['khorn3', 'khorn2', 'khorn1']
@@ -157,7 +176,8 @@ export const markers: MarkerData[] = [
       type: 'video',
       description: ', но наклонясь к голове девушки, он лишь дотронулся языком до её носа…',
       videoUrl: illumina2_video,
-      thumbnail: illumina2
+      thumbnail: illumina2,
+      pageNumber: 72
     },
     icon: illumina2,
     iconSize: [90, 49],
@@ -200,7 +220,8 @@ export const markers: MarkerData[] = [
         "Керн:\n Береги себя, Ами. Лес — не всегда ласков. Но ты умеешь слушать.",
         "Ами:\n А ты — умеешь молчать так, что из этого рождаются смыслы.\n Прощай, Керн.",
         "Керн (кивает, снова опуская взгляд к огню):\n Прощай, пусть твой путь будет странным. Это самое лучшее, что может быть."
-      ]
+      ],
+      pageNumber: 119
     },
     requiredVisits: ['khorn3', 'khorn2', 'khorn1', 'bridge', 'illumina2'],
   },
@@ -219,7 +240,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: '… и наконец мне удалось уснуть, точнее я не заметила этого и просто отключилась.',
-
+          pageNumber: 132
         }
       ]
     },
@@ -241,7 +262,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Теперь Кхорн внутри меня смеётся. Мол, я предупреждал…',
-
+          pageNumber: 147
         }
       ]
     },
@@ -263,7 +284,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Всё внутри затихало, будто готовясь к новой пустоте.',
-
+          pageNumber: 153
         },
         {
           src: match1,
@@ -271,7 +292,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Здесь, в этой петле — времени не существовало. И это было лекарством. На короткое время.',
-
+          pageNumber: 158
         },
         {
           src: match2,
@@ -279,7 +300,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'И не оглянулась.',
-
+          pageNumber: 161
         }
       ]
     },
@@ -305,6 +326,7 @@ export const markers: MarkerData[] = [
               width: 800,
               height: 600,
               description: 'И вся жизнь — это пальцы времени, лепящие тебя снова и снова.',
+              pageNumber: 165
             },
           ],
         },
@@ -330,7 +352,8 @@ export const markers: MarkerData[] = [
             "Улица запахов",
             "",
             "Лавки, усыпанные травами. Сладкая выпечка. Ладан. Цветочные масла. Всё пахнет безопасностью. Но внутри меня — запах гари. Я стараюсь не дышать глубоко.",
-          ]
+          ],
+          pageNumber: 169
         },
         {
           type: 'photo',
@@ -341,6 +364,7 @@ export const markers: MarkerData[] = [
               width: 800,
               height: 600,
               description: 'И чувства не ушли, они разрослись, отяжелели и стали густыми.',
+              pageNumber: 173
             },
             {
               src: senzilia2photo,
@@ -348,7 +372,7 @@ export const markers: MarkerData[] = [
               width: 800,
               height: 600,
               description: 'Но всё чаще — не изнутри, а потому что так было принято.',
-            },
+              pageNumber: 176            },
           ],
         },
       ]
@@ -375,6 +399,7 @@ export const markers: MarkerData[] = [
               width: 800,
               height: 600,
               description: 'Положила его на камень у дороги. И ушла.',
+              pageNumber: 180
             },
           ],
         },
@@ -466,7 +491,8 @@ export const markers: MarkerData[] = [
               text: 'Они шли долго. Девочка не спрашивала куда. Ами не давала ответов. Они просто шли — будто следуя внутренней интуиции, без карт, без планов, с тёплым ощущением, что нужное место само найдёт их, как находят семя плодородную почву.',
               options: []
             }
-          ]
+          ],
+          pageNumber: 185
         },
       ],
     },
@@ -488,7 +514,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'А теперь лес учит меня понимать, не спрашивать и не объяснять, просто быть.',
-
+          pageNumber: 194
         },
         {
           src: amiHome2,
@@ -496,7 +522,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: '…и в эти мгновения тишины всё кажется совершенным…',
-
+          pageNumber: 198
         },
         {
           src: amiHome3,
@@ -504,7 +530,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: '…как воспоминание, к которому нельзя вернуться, но которое всегда будет жить внутри, в рассветах, в закатах и в темноте.',
-
+          pageNumber: 204
         }
       ]
     },
@@ -526,7 +552,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Она смотрела в никуда, ничего не чувствовала и ощущала себя никем…',
-
+          pageNumber: 213
         },
         {
           src: jail1,
@@ -534,7 +560,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Или тоже - сон, созданный, чтобы спасти меня от чего-то страшного внутри?',
-
+          pageNumber: 219
         },
         {
           src: jail2,
@@ -542,15 +568,15 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Вонзались в кожу, проходили через сердце, выходили сквозь глаза.',
-
-        },
+          pageNumber: 223
+        }, 
         {
           src: jail3,
           alt: 'jail3',
           width: 1200,
           height: 800,
           description: 'Но она знала: легенды здесь не выживают.',
-
+          pageNumber: 258
         },
         {
           src: jail4,
@@ -558,7 +584,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'И пока что — этого было достаточно. Пока что.',
-
+          pageNumber: 296
         },
         {
           src: jail5,
@@ -566,7 +592,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Море было чёрным, как её мысли. Но оно двигалось. И она тоже. Одна.',
-
+          pageNumber: 310
         },
       ]
     },
@@ -588,7 +614,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'И это был знак: ночь — уходит. Ами гребла. И море вело её.',
-
+          pageNumber: 336
         },
         {
           src: plemyWater,
@@ -596,7 +622,7 @@ export const markers: MarkerData[] = [
           width: 1200,
           height: 800,
           description: 'Ты многое несёшь. Много мёртвого. Мы берём не вещи, а то, что оставляют.',
-
+          pageNumber: 344
         }
       ]
     },
@@ -613,13 +639,101 @@ export const markers: MarkerData[] = [
       type: 'photo',
       images: [
         {
-          src: mlechny,
-          alt: 'mlechny',
+          src: eye1,
+          alt: 'eye1',
           width: 1200,
           height: 800,
-          description: 'И это был знак: ночь — уходит. Ами гребла. И море вело её.',
-
-        }
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye2,
+          alt: 'eye2',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye3,
+          alt: 'eye3',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye4,
+          alt: 'eye4',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye5,
+          alt: 'eye5',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye6,
+          alt: 'eye6',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye7,
+          alt: 'eye7',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye8,
+          alt: 'eye8',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye9,
+          alt: 'eye9',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye10,
+          alt: 'eye10',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye11,
+          alt: 'eye11',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
+        {
+          src: eye12,
+          alt: 'eye12',
+          width: 1200,
+          height: 800,
+          description: 'Где нет старого имени. Где начинается новая песня.',
+          pageNumber: 375
+        },
       ]
     },
     icon: hoshka,

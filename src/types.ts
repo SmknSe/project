@@ -6,7 +6,7 @@ export interface MarkerData {
   content: ContentData;
   icon: string,
   iconSize: [number, number]
-  requiredVisits: string[]; // IDs of markers that must be visited first
+  requiredVisits: string[];
 }
 
 interface BaseContent {
@@ -20,7 +20,8 @@ interface PhotoContent extends BaseContent {
     alt: string;
     width: number;
     height: number;
-  description: string;
+    description: string;
+    pageNumber: number;
   }[];
 }
 
@@ -29,18 +30,20 @@ interface VideoContent extends BaseContent {
   videoUrl: string;
   thumbnail: string;
   description: string;
-
+  pageNumber: number;
 }
 
 interface TextContent extends BaseContent {
   type: 'text';
   paragraphs: string[];
+  pageNumber: number;
 }
 
 interface DialogContent extends BaseContent {
   type: 'dialog';
   start: string;
   nodes: DialogNode[];
+  pageNumber: number;
 }
 
 interface DialogNode {

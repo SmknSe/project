@@ -34,12 +34,15 @@ const PhotoGalleryModal = ({ marker, isVisible, onClose, clickPosition, children
           {/* Шапка */}
           <div className="flex items-center justify-between text-white px-4 py-3">
             <h2 className="text-lg font-bold">{marker.title}</h2>
-            <button
-              onClick={onClose}
-              className="text-white hover:text-gray-300 transition"
-            >
-              <X size={20} />
-            </button>
+            <div className="flex items-center gap-2">
+              {content.images[currentImageIndex].pageNumber && <span className="text-sm opacity-70">{content.images[currentImageIndex].pageNumber}с</span>}
+              <button
+                onClick={onClose}
+                className="text-white hover:text-gray-300 transition"
+              >
+                <X size={20} />
+              </button>
+            </div>
           </div>
 
           {/* Картинка */}
@@ -115,9 +118,15 @@ const VideoModal = ({ marker, isVisible, onClose, clickPosition }: ContentModalP
           {/* Header */}
           <div className="flex items-center justify-between text-white px-4 py-3">
             <h2 className="text-lg font-bold">{marker.title}</h2>
-            <button onClick={onClose} className="text-white hover:text-gray-300 transition">
-              <X size={20} />
-            </button>
+            <div className="flex items-center gap-2">
+              {content.pageNumber && <span className="text-sm opacity-70">{content.pageNumber}с</span>}
+              <button
+                onClick={onClose}
+                className="text-white hover:text-gray-300 transition"
+              >
+                <X size={20} />
+              </button>
+            </div>
           </div>
 
           {/* Video Player */}
@@ -184,9 +193,15 @@ const TextModal = ({ marker, isVisible, onClose, clickPosition, children }: Reac
           {/* Шапка */}
           <div className="flex items-center justify-between text-white px-4 py-3">
             <h2 className="text-lg font-bold">{marker.title}</h2>
-            <button onClick={onClose} className="text-white hover:text-gray-300 transition">
-              <X size={20} />
-            </button>
+            <div className="flex items-center gap-2">
+              {content.pageNumber && <span className="text-sm opacity-70">{content.pageNumber}с</span>}
+              <button
+                onClick={onClose}
+                className="text-white hover:text-gray-300 transition"
+              >
+                <X size={20} />
+              </button>
+            </div>
           </div>
 
           {/* Контент */}
@@ -278,12 +293,15 @@ const DialogModal = ({ marker, isVisible, onClose, clickPosition, children }: Re
           {/* Шапка */}
           <div className="flex items-center justify-between text-white px-4 py-3">
             <h2 className="text-lg font-bold">{marker.title}</h2>
-            <button
-              onClick={onClose}
-              className="text-white hover:text-gray-300 transition"
-            >
-              <X size={20} />
-            </button>
+            <div className="flex items-center gap-2">
+              {content.pageNumber && <span className="text-sm opacity-70">{content.pageNumber}с</span>}
+              <button
+                onClick={onClose}
+                className="text-white hover:text-gray-300 transition"
+              >
+                <X size={20} />
+              </button>
+            </div>
           </div>
 
           {/* История диалога */}

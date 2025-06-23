@@ -95,7 +95,7 @@ export default function CustomMap() {
   }, [visitedMarkers]);
 
   const isNewlyEnabled = useCallback((marker: MarkerData) => {
-  if (marker.requiredVisits.length === 0) return false;
+  if (marker.requiredVisits.length === 0 && visitedMarkers.length === 0) return true;
 
   const uniqueVisited = Array.from(new Set(visitedMarkers));
   const uniqueRequired = Array.from(new Set(marker.requiredVisits));
